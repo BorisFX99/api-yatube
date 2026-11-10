@@ -27,5 +27,4 @@ urlpatterns = [
         }),
         name='comment-detail',
     ),
-
 ]
