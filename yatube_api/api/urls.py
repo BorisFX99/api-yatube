@@ -3,13 +3,15 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 from .views import PostViewSet, GroupViewSet, CommentViewSet
 
-router = DefaultRouter()
-router.register('posts', PostViewSet, basename='post')
-router.register('groups', GroupViewSet, basename='group')
 
-urlpatterns = [
+# Именованный роутер для порядка
+router_v1 = DefaultRouter()
+router_v1.register('posts', PostViewSet, basename='post')
+router_v1.register('groups', GroupViewSet, basename='group')
+
+v1_patterns = [
     path('api-token-auth/', obtain_auth_token),
-    path('', include(router.urls)),
+    path('', include(router_v1.urls)),
 
     # Вложенные URL для комментариев
     path(
@@ -27,4 +29,12 @@ urlpatterns = [
         }),
         name='comment-detail',
     ),
+]
+
+# Связь префикс v1 со списком маршрутов
+urlpatterns = [
+    path('v1/', include(v1_patterns)),
+
+    # Сюда в будущем можно добавить новый маршрут или версию апишки:
+    # path('v2/', include(v2_patterns)),
 ]
