@@ -7,9 +7,11 @@ class CommentInline(admin.TabularInline):
     model = Comment
     extra = 0  # Не показывать пустые формы для добавления (ибо так захотелось)
     fields = ('author', 'text', 'created')  # Какие поля показывать
-    readonly_fields = ('author', 'text', 'created')  # Запрещаем редактировать их прямо в списке
+    # Запрещаем редактировать их прямо в списке
+    readonly_fields = ('author', 'text', 'created')
     show_change_link = True  # Добавляет ссылку "Изменить - вся крутота тут!"
-    max_num = 0  # Запрещаем добавлять новые комментарии прямо из карточки поста
+    # Запрещаем добавлять новые комментарии прямо из карточки поста
+    max_num = 0
 
 
 @admin.register(Post)

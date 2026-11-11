@@ -61,8 +61,9 @@ class Post(models.Model):
 
     def __str__(self):
         # Обрезаем до 20 символов. Если текст длиннее, добавляем многоточие.
-        short_text = self.text[:20] + '...' if len(self.text) > 20 else self.text
-        return short_text
+        if len(self.text) > 20:
+            return self.text[:20] + '...'
+        return self.text
 
 
 class Comment(models.Model):
@@ -92,5 +93,13 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
 
     def __str__(self):
-        short_text = self.text[:20] + '...' if len(self.text) > 20 else self.text
-        return f'{self.author.username}: {short_text} (к посту {self.post.id})'
+        # Если текст длинный
+        if len(self.text) > 20:
+            short_text = self.text[:20] + '...'
+        else:
+            short_text = self.text
+
+        return (
+            f'{self.author.username}: {short_text} '
+            f'(к посту {self.post.id})'
+        )
